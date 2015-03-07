@@ -32,9 +32,19 @@ describe('QueryStringConverter', function () {
 		var convertQuery,
 			qsConverterInstance;
 
+		var testAdapter = new Map();
+		testAdapter.set('limitTo',
+			{
+				key          : 'limit',
+				convertValue : function (value) {
+					return parseInt(value);
+				},
+				validInputs  : /^[0-9]*$/
+			});
+
 		beforeEach(function () {
 			qsConverterInstance = new QueryStringConverter({
-				adapter : {}
+				adapter : testAdapter
 			});
 			convertQuery = qsConverterInstance.convertQuery;
 		});
@@ -46,7 +56,6 @@ describe('QueryStringConverter', function () {
 		it('should be a function', function () {
 			expect(convertQuery).to.be.a('function');
 		});
-
 
 		describe('special cases', function () {
 			it('should throw "InvalidQueryParameter" on invalid query Parameter', function () {
