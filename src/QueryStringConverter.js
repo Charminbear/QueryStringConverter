@@ -18,7 +18,7 @@ var QueryStringConverter = function () {
 		var result = {};
 
 		_.each(parsedQuery, function (value, key) {
-			let adapterElement = adapter[key];
+			let adapterElement = adapter.get(key);
 			if (!adapterElement) {
 				throw new qsErrors.InvalidQueryParameter('Invalid query parameter with key "' + key + '"!');
 			}

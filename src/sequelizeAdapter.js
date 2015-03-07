@@ -9,22 +9,23 @@ const numberRegex = /^[0-9]*$/,
 	SORT_ASCENDING = 'ASC',
 	SORT_DESCENDING = 'DESC';
 
-module.exports = {
-	limitTo : {
-		key         : 'limit',
-		getValue    : function (value) {
-			return parseInt(value);
-		},
-		validInputs : numberRegex
+
+var sequelizeAdapter = new Map();
+sequelizeAdapter.set('limitTo', {
+	key         : 'limit',
+	getValue    : function (value) {
+		return parseInt(value);
 	},
-	offset  : {
-		key         : 'offset',
-		getValue    : function (value) {
-			return parseInt(value);
-		},
-		validInputs : numberRegex
+	validInputs : numberRegex
+});
+sequelizeAdapter.set('offset', {
+	key         : 'offset',
+	getValue    : function (value) {
+		return parseInt(value);
 	},
-	orderBy : {
+	validInputs : numberRegex
+});
+sequelizeAdapter.set('orderBy', {
 		key         : 'order',
 		getValue    : function (value) {
 			let allFields = value.split(',');
@@ -42,4 +43,5 @@ module.exports = {
 		},
 		validInputs : /.*/
 	}
-};
+);
+module.exports = sequelizeAdapter;

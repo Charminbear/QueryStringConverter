@@ -5,12 +5,12 @@
 const _ = require('lodash');
 
 var QueryStringConverter = require('./QueryStringConverter'),
-	AllErrors = require('./errors');
+	allErrors = require('./errors');
 
-var API = {
+var QueryStringConverterFactory = {
 	createInstance        : function () {
 		return new QueryStringConverter();
 	}
 };
 
-module.exports = _.extend(API, AllErrors);
+module.exports = _.extend(QueryStringConverterFactory, allErrors);
