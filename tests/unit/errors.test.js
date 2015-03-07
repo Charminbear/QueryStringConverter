@@ -45,7 +45,7 @@ describe('QSConverter-Errors', function () {
 		});
 	});
 
-	describe('InvalidArgument', function () {
+	describe('InvalidQueryValue', function () {
 		var errorInstance;
 
 		before(function () {
@@ -70,6 +70,26 @@ describe('QSConverter-Errors', function () {
 			expect(errorInstance).to.have.property('name');
 			expect(errorInstance.name).to.equal('InvalidArgument');
 		});
+	});
 
+	describe('MissingAdapter', function () {
+		it('should exist', function () {
+			let MissingAdapter = qsErrors.MissingAdapter;
+			expect(MissingAdapter).to.exist;
+		});
+
+		it('should be type error', function () {
+			expect(util.isError(new qsErrors.MissingAdapter)).to.be.true;
+		});
+
+		it('should have name "MissingAdapter"', function () {
+			expect(new qsErrors.MissingAdapter().name).to.equal('MissingAdapter');
+		});
+
+		it('should have message property', function () {
+			var myErrorMessage = 'Test-Error-Message';
+			var errorInstance = new qsErrors.MissingAdapter(myErrorMessage);
+			expect(errorInstance.message).to.equal(myErrorMessage);
+		});
 	});
 });

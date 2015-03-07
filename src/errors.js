@@ -19,5 +19,13 @@ var InvalidQueryValue = function (message) {
 };
 util.inherits(InvalidQueryValue, Error);
 
+var MissingAdapter = function (message) {
+	Error.call(this);
+	this.name = 'MissingAdapter';
+	this.message = message;
+};
+util.inherits(MissingAdapter, Error);
+
 exports.InvalidQueryParameter = InvalidQueryParameter;
 exports.InvalidQueryValue = InvalidQueryValue;
+exports.MissingAdapter = MissingAdapter;
