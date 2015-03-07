@@ -10,14 +10,20 @@ const QueryStringConverter = require('../../src/QueryStringConverter'),
 	errors = require('../../src/errors');
 
 describe('QueryStringConverter', function () {
-	describe('#intance', function () {
-		var qsConverterInstance;
+	describe('#instance', function () {
+		it('should throw error if no options object given', function () {
+			var instanceWrapper = function () {
+				new QueryStringConverter();
+			};
+			expect(instanceWrapper).to.throw('Missing Options Object');
+		});
 
 		it('should throw if no adapter in options', function () {
-
-		});
-		beforeEach(function () {
-			qsConverterInstance = new QueryStringConverter();
+			var instanceWrapper = function () {
+				new QueryStringConverter({});
+			};
+			var errorMessage = 'No Adapter defined. Define it within the Options-Object.';
+			expect(instanceWrapper).to.throw(errors.MissingAdapter, errorMessage);
 		});
 	});
 
@@ -27,7 +33,9 @@ describe('QueryStringConverter', function () {
 			qsConverterInstance;
 
 		beforeEach(function () {
-			qsConverterInstance = new QueryStringConverter();
+			qsConverterInstance = new QueryStringConverter({
+				adapter : {}
+			});
 			convertQuery = qsConverterInstance.convertQuery;
 		});
 
@@ -38,6 +46,7 @@ describe('QueryStringConverter', function () {
 		it('should be a function', function () {
 			expect(convertQuery).to.be.a('function');
 		});
+
 
 		describe('special cases', function () {
 			it('should throw "InvalidQueryParameter" on invalid query Parameter', function () {

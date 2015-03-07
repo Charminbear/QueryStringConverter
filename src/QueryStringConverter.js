@@ -10,7 +10,14 @@ const _ = require('lodash'),
 
 var sequelizeAdapter = require('./sequelizeAdapter');
 
-var QueryStringConverter = function () {
+var QueryStringConverter = function (options) {
+	if(!options){
+		throw new Error('Missing Options Object');
+	} else if(!options.adapter){
+		throw new qsErrors.MissingAdapter('No Adapter defined. Define it within the Options-Object.');
+	}
+
+
 	var adapter = sequelizeAdapter;
 
 	this.convertQuery = function (query) {
