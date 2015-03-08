@@ -16,7 +16,7 @@ between your requests and your Controllers and/or DB-Calls. Yay - Separation of 
 
 ##API
 **QueryStringConverterFactory**
-The QueryStringConerterFactory is what you get when you require('QSConverter') inside your app.
+The QueryStringConverterFactory is what you get when you require('QSConverter') inside your app.
 
 * createInstance(options) - create a new QueryStringConverter, options can be:
     * silentErrors {boolean} - if set to true, no errors will be thrown, invalid keys or values are ignored
@@ -54,7 +54,6 @@ Adapter. Returns an {Object} with the AdapterElement's keys as properties and th
 * orderBy - valid inputs: +field & field for Ascending, -field for Descending sortOrder of the Field. Comma-separated
  for multiple sort fields in the order given.
 * fields - Comma-separated fields to include in the Answer-Object.
-* include - Comma-separated relation-objects to include in the Answer-Object
 
 ##Adapters:
 **Sequelize**
@@ -63,5 +62,4 @@ The standard Query-API transforms to these sequelize values:
 * limitTo --> {limit : INTEGER}
 * offset --> {offset: INTEGER}
 * orderBy --> [['field1', 'ASC'], ['field2', 'DESC']]
-* fields --> tdb.
-* include --> tbd.
+* columns --> {attributes : ['column1', 'column2']}
