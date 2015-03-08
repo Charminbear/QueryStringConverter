@@ -6,6 +6,7 @@
 const _ = require('lodash');
 
 const numberRegex = /^[0-9]*$/,
+	WHITESPACE_REGEX = /\s/g,
 	SORT_ASCENDING = 'ASC',
 	SORT_DESCENDING = 'DESC';
 
@@ -44,4 +45,12 @@ sequelizeAdapter.set('orderBy', {
 		validInputs       : /.*/
 	}
 );
+sequelizeAdapter.set('columns', {
+	key : 'attributes',
+	convertQueryValue: function (value) {
+		value = value.replace(WHITESPACE_REGEX, '');
+		return value.split(',');
+	}
+});
+
 module.exports = sequelizeAdapter;
