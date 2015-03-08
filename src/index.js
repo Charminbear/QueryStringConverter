@@ -2,7 +2,8 @@
 /**
  * Created by dave on 02.01.15.
  */
-const _ = require('lodash');
+const _ = require('lodash'),
+	util = require('util');
 
 var QueryStringConverter = require('./QueryStringConverter'),
 	allErrors = require('./errors'),
@@ -13,9 +14,23 @@ var QueryStringConverter = require('./QueryStringConverter'),
 
 var QueryStringConverterFactory = {
 	createInstance : function (customOptions) {
-		var options = _.defaults({}, customOptions, defaultOptions);
+		let options = _.defaults({}, customOptions, defaultOptions);
+		let usedAdapter = resolveAdapter(options.adapter);
+		options.adapter = usedAdapter;
 		return new QueryStringConverter(options);
 	}
 };
+
+function resolveAdapter(adapter) {
+	if (!util.isString(adapter)) {
+		return adapter;
+	} else {
+		try {
+			return require('./' + adapter + 'Adapter');
+		} catch (e) {
+			throw new allErrors.MissingAdapter('Specified Adapter "' + adapter + '" could not be found. If it is a custom adapter, register it first with #registerAdapter().');
+		}
+	}
+}
 
 module.exports = _.extend(QueryStringConverterFactory, allErrors);
