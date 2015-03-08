@@ -5,11 +5,16 @@
 const _ = require('lodash');
 
 var QueryStringConverter = require('./QueryStringConverter'),
-	allErrors = require('./errors');
+	allErrors = require('./errors'),
+	defaultOptions = {
+		silentErrors : false,
+		adapter      : 'sequelize'
+	};
 
 var QueryStringConverterFactory = {
-	createInstance        : function () {
-		return new QueryStringConverter();
+	createInstance : function (customOptions) {
+		var options = _.defaults({}, customOptions, defaultOptions);
+		return new QueryStringConverter(options);
 	}
 };
 
