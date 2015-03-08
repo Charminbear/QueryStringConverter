@@ -21,8 +21,9 @@ The QueryStringConerterFactory is what you get when you require('QSConverter') i
 * createInstance(options) - create a new QueryStringConverter, options can be:
     * silentErrors {boolean} - if set to true, no errors will be thrown, invalid keys or values are ignored
     * adapter {String} - specify the adapter to be used by this instance (defaults to 'sequelize')
-    * customAdapterElements {Array} - Array of custom adapter-elements to be used
-* registerAdapter(adapter) - Add a new adapter which can then be used by createInstance
+    * customAdapterElements {Map} - Map of custom adapter-elements to be used
+* registerAdapter(name, adapter) - Add a new adapter which can then be used within the adapter-option passed to
+createInstance identified by the name
 * setDefaultOptions(options) - takes in the same Options as the *createInstance* Methods. All further calls to
 **createInstance** will use those options to create an instance.
 
