@@ -12,22 +12,22 @@ const numberRegex = /^[0-9]*$/,
 
 var sequelizeAdapter = new Map();
 sequelizeAdapter.set('limitTo', {
-	key         : 'limit',
-	getValue    : function (value) {
+	key               : 'limit',
+	convertQueryValue : function (value) {
 		return parseInt(value);
 	},
-	validInputs : numberRegex
+	validInputs       : numberRegex
 });
 sequelizeAdapter.set('offset', {
-	key         : 'offset',
-	getValue    : function (value) {
+	key               : 'offset',
+	convertQueryValue : function (value) {
 		return parseInt(value);
 	},
-	validInputs : numberRegex
+	validInputs       : numberRegex
 });
 sequelizeAdapter.set('orderBy', {
-		key         : 'order',
-		getValue    : function (value) {
+		key               : 'order',
+		convertQueryValue : function (value) {
 			let allFields = value.split(',');
 			return _.map(allFields, function (currentField) {
 				let sortOrder = SORT_ASCENDING;
@@ -41,7 +41,7 @@ sequelizeAdapter.set('orderBy', {
 				return [currentField, sortOrder];
 			});
 		},
-		validInputs : /.*/
+		validInputs       : /.*/
 	}
 );
 module.exports = sequelizeAdapter;

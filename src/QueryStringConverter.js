@@ -8,8 +8,6 @@ const _ = require('lodash'),
 	queryString = require('querystring'),
 	qsErrors = require('./errors');
 
-var sequelizeAdapter = require('./sequelizeAdapter');
-
 var QueryStringConverter = function (options) {
 	if(!options){
 		throw new Error('Missing Options Object');
@@ -17,8 +15,7 @@ var QueryStringConverter = function (options) {
 		throw new qsErrors.MissingAdapter('No Adapter defined. Define it within the Options-Object.');
 	}
 
-
-	var adapter = sequelizeAdapter;
+	var adapter = options.adapter;
 
 	this.convertQuery = function (query) {
 		var parsedQuery = queryString.parse(query);
@@ -30,11 +27,7 @@ var QueryStringConverter = function (options) {
 				throw new qsErrors.InvalidQueryParameter('Invalid query parameter with key "' + key + '"!');
 			}
 
-			if (!value.match(adapterElement.validInputs)) {
-				throw new qsErrors.InvalidQueryValue('Invalid value "' + value + '" for key "' + key + '"');
-			}
-
-			result[adapterElement.key] = adapterElement.getValue(value);
+			result[adapterElement.key] = adapterElement.convertQueryValue(value);
 		});
 
 		return result;
