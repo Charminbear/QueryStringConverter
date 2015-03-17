@@ -16,7 +16,9 @@ const QueryStringConverter = require('../../src/QueryStringConverter'),
 	errors = require('../../src/errors');
 
 describe('QueryStringConverter', function () {
+
 	describe('#instance', function () {
+
 		it('should throw error if no options object given', function () {
 			var instanceWrapper = function () {
 				new QueryStringConverter();
@@ -33,12 +35,10 @@ describe('QueryStringConverter', function () {
 		});
 	});
 
-
 	describe('#convertQuery()', function () {
 		var convertQuery,
 			qsConverterInstance,
 			testAdapter;
-
 
 		beforeEach(function () {
 			testAdapter = new Map();
@@ -80,6 +80,24 @@ describe('QueryStringConverter', function () {
 				expect(result).to.deep.equal(expectedResult);
 			});
 		});
+
+        describe('validation', function () {
+            let adapterElementMock;
+            beforeEach(function () {
+                adapterElementMock = {
+                    key : 'test',
+                    convertQueryValue: sinon.stub().returns(42),
+                    validate: /^a$/
+                };
+                testAdapter.set('testKey', adapterElementMock);
+            });
+
+            it('should throw "InvalidQueryValue" if value doesnt match regex', function () {
+                var funcWrapper = function(){convertQuery('testKey=b')};
+                expect(funcWrapper).to.throw(errors.InvalidQueryValue, 'Validation failed for Query-Value "b"!');
+            });
+
+        });
 
 		describe('special cases', function () {
 			it('should throw "InvalidQueryParameter" on invalid query Parameter', function () {
