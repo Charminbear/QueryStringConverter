@@ -14,7 +14,7 @@ util.inherits(InvalidQueryParameter, Error);
 
 var InvalidQueryValue = function (message) {
 	Error.call(this);
-	this.name = 'InvalidArgument';
+	this.name = 'InvalidQueryValue';
 	this.message = message;
 };
 util.inherits(InvalidQueryValue, Error);

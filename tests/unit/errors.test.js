@@ -68,7 +68,7 @@ describe('QSConverter-Errors', function () {
 
 		it('should have name property', function () {
 			expect(errorInstance).to.have.property('name');
-			expect(errorInstance.name).to.equal('InvalidArgument');
+			expect(errorInstance.name).to.equal('InvalidQueryValue');
 		});
 	});
 
