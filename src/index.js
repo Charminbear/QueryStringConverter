@@ -6,8 +6,13 @@ const _ = require('lodash'),
 	util = require('util');
 
 var QueryStringConverter = require('./QueryStringConverter'),
-	allErrors = require('./errors'),
-	defaultOptions = {
+	allErrors = require('./errors');
+
+/**
+ * @constant options
+ * @type {{silentErrors: boolean, adapter: string}}
+ */
+var defaultOptions = {
 		silentErrors : false,
 		adapter      : 'sequelize'
 	};
@@ -15,8 +20,7 @@ var QueryStringConverter = require('./QueryStringConverter'),
 var QueryStringConverterFactory = {
 	createInstance : function (customOptions) {
 		let options = _.defaults({}, customOptions, defaultOptions);
-		let usedAdapter = resolveAdapter(options.adapter);
-		options.adapter = usedAdapter;
+        options.adapter = resolveAdapter(options.adapter);
 		return new QueryStringConverter(options);
 	}
 };
