@@ -8,7 +8,7 @@ const expect = require('chai').expect,
 	util = require('util');
 
 const qsErrors = require('../../src/errors');
-describe('QSConverter-Errors', function () {
+describe('Errors', function () {
 
 	describe('InvalidQueryParameter', function () {
 		var InvalidQueryParameter = qsErrors.InvalidQueryParameter;
