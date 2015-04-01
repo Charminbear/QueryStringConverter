@@ -39,7 +39,7 @@ var QueryStringConverter = function (options) {
   function validateQueryElement(adapterElement, queryElementKey, queryElementValue) {
     if (!adapterElement) {
       throw new qsErrors.InvalidQueryParameter('Invalid query parameter with key "' + queryElementKey + '"!');
-    } else if (!queryElementValue.match(adapterElement.validate)) {
+    } else if (!queryElementValue.match(adapterElement.validInputs)) {
       throw new qsErrors.InvalidQueryValue('Validation failed for Query-Value "' + queryElementValue + '"!');
     }
   }

@@ -35,8 +35,7 @@ describe('QueryStringConverter', function () {
   });
 
   describe('#convertQuery()', function () {
-    var convertQuery,
-      qsConverterInstance,
+    var qsConverterInstance,
       testAdapter;
 
     beforeEach(function () {
@@ -44,7 +43,6 @@ describe('QueryStringConverter', function () {
       qsConverterInstance = new QueryStringConverter({
         adapter : testAdapter
       });
-      convertQuery = qsConverterInstance.convertQuery;
     });
 
     it('should exist', function () {
@@ -86,7 +84,7 @@ describe('QueryStringConverter', function () {
         adapterElementMock = {
           key               : 'test',
           convertQueryValue : sinon.stub().returns(42),
-          validate          : /^a$/
+          validInputs          : /^a$/
         };
         testAdapter.set('testKey', adapterElementMock);
       });
@@ -111,7 +109,7 @@ describe('QueryStringConverter', function () {
         adapterElementMock = {
           key               : 'test',
           convertQueryValue : sinon.stub().returns(42),
-          validate          : /^a$/
+          validInputs          : /^a$/
         };
         testAdapter.set('testKey', adapterElementMock);
         qsConverterInstance = new QueryStringConverter({
@@ -137,7 +135,15 @@ describe('QueryStringConverter', function () {
       });
 
       it('should still convert valid queries', function () {
-
+        let adapterElementMock2 = {
+          key               : 'valid',
+          convertQueryValue : sinon.stub().returns(42),
+          validInputs          : /^valid$/
+        };
+        testAdapter.set('valid', adapterElementMock2);
+        let mixedQuery = 'invalidKey=invalidValue&valid=valid';
+        let result = qsConverterInstance.convertQuery(mixedQuery);
+        expect(result).to.deep.equal({valid: 42});
       });
     });
   });
