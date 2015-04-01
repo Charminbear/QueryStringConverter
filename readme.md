@@ -1,6 +1,6 @@
 ##THIS IS A WORK IN PROGRESS CONCEPT AS WELL AS APP
 I got the idea for this while developing my first real RESTful API and not being able to find an easy Library for
-handling of QueryStrings. So I decided to put this as a side-project. As im also diving into the awesome world of
+handling and converting QueryStrings. So I decided to put this as a side-project. As im also diving into the awesome world of
 TDD, im doing my best to develop this whole Library in TDD Style. This of course also means that im prefering a more
 agile development - so the API and especially the given Names described below are most likely to change a lot. I put it
 there to have some basic requirements and an Idea of what I actaully have to test and then develop.
@@ -22,8 +22,8 @@ The QueryStringConverterFactory is what you get when you require('QSConverter') 
     * silentErrors {boolean} - if set to true, no errors will be thrown, invalid keys or values are ignored
     * adapter {String} - specify the adapter to be used by this instance (defaults to 'sequelize')
     * customAdapterElements {Map} - Map of custom adapter-elements to be used
-* registerAdapter(name, adapter) - Add a new adapter which can then be used within the adapter-option passed to
-createInstance identified by the name
+* ~~registerAdapter(name, adapter) - Add a new adapter which can then be used within the adapter-option passed to
+createInstance identified by the name~~ *NOT YET IMPLEMENTED*
 * setDefaultOptions(options) - takes in the same Options as the *createInstance* Methods. All further calls to
 **createInstance** will use those options to create an instance.
 
