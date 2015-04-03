@@ -1,37 +1,31 @@
-##THIS IS A WORK IN PROGRESS CONCEPT AS WELL AS APP
-I got the idea for this while developing my first real RESTful API and not being able to find an easy Library for
-handling and converting QueryStrings. So I decided to put this as a side-project. As im also diving into the awesome world of
-TDD, im doing my best to develop this whole Library in TDD Style. This of course also means that im prefering a more
-agile development - so the API and especially the given Names described below are most likely to change a lot. I put it
-there to have some basic requirements and an Idea of what I actaully have to test and then develop.
-
-Im always open for Input, so feel free to leave an Issue!
-
-#QueryStringConverter (working name)
+#QueryStringConverter
 
 Helping you to easily convert Querystrings from a **REST**ful URI into whatever format you need, for example a valid
 query-object for the awesome **sequelize** library! The idea is to have a very simple and dynamic abstract layer
 between your requests and your Controllers and/or DB-Calls. Yay - Separation of Concerns!
 
+##EXAMPLE
+tbd
 
 ##API
 **QueryStringConverterFactory**
-The QueryStringConverterFactory is what you get when you require('QSConverter') inside your app.
+The QueryStringConverterFactory is what you get when you require('QueryStringConverter') inside your app. It has the following methods:
 
-* createInstance(options) - create a new QueryStringConverter, options can be:
+* createInstance({String} name, [{Object} options]) - create a new QueryStringConverter with a string-based nam. Possible Options are:
     * silentErrors {boolean} - if set to true, no errors will be thrown, invalid keys or values are ignored
     * adapter {String} - specify the adapter to be used by this instance (defaults to 'sequelize')
-    * customAdapterElements {Map} - Map of custom adapter-elements to be used
-* ~~registerAdapter(name, adapter) - Add a new adapter which can then be used within the adapter-option passed to
-createInstance identified by the name~~ *NOT YET IMPLEMENTED*
-* setDefaultOptions(options) - takes in the same Options as the *createInstance* Methods. All further calls to
-**createInstance** will use those options to create an instance.
+    * ~customAdapterElements {Map} - Map of custom adapter-elements to be used~
+* getInstance(name) - receive a previously created adapter by the given name.
+* ~registerAdapter(name, adapter) - Add a new adapter which can then be used within the adapter-option passed to
+createInstance identified by the name~ *NOT YET IMPLEMENTED*
+* ~setDefaultOptions(options) - takes in the same Options as the *createInstance* Methods. All further calls to
+**createInstance** will use those options to create an instance.~
 
 **Adapter**
-An adapter is basically an key-value store where the key is a QueryParameterKey, the value is a AdapterElement.
+An adapter is basically a key-value store where the key is a QueryParameterKey, the value is an AdapterElement.
 
 **AdapterElement**
-The Adapter-Element has up to 3 properties:
+The Adapter-Element needs 3 properties:
 
 * key {String} - This is the key used within the result-object of the converter
 * convertQueryValue {function(queryParameterValue)} - the actual conversion function for this AdapterElement. The value
@@ -63,3 +57,12 @@ The standard Query-API transforms to these sequelize values:
 * offset --> {offset: INTEGER}
 * orderBy --> [['field1', 'ASC'], ['field2', 'DESC']]
 * columns --> {attributes : ['column1', 'column2']}
+
+##License
+Copyright (c) \<2014\> \<David Losert\>
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
