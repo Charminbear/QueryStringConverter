@@ -111,10 +111,16 @@ describe('API', function () {
 			expect(qsConverterFactory.getInstance('test')).to.equal(myInstance);
 		});
 
+		it('should return only instance if called without arguments', function () {
+			var myInstance = qsConverterFactory.createInstance();
+			expect(qsConverterFactory.getInstance()).to.equal(myInstance);
+		});
+
 		it('should throw "InvalidInstanceName" Error if no instance with this name exists', function () {
 			let creationInstanceCall = qsConverterFactory.getInstance.bind(qsConverterFactory, 'nonExisting');
 			let errorMessage = 'No Instance with name "nonExisting" found. Please make sure you created it with #createInstance().';
 			expect(creationInstanceCall).to.throw(qsErrors.InvalidInstanceName, errorMessage);
 		});
+
 	});
 });
