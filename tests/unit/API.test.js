@@ -12,7 +12,7 @@ const chai = require("chai"),
 
 chai.use(sinonChai);
 
-const errors = require('../../src/errors');
+const qsErrors = require('../../src/errors');
 
 describe('API', function () {
 	var qsConverterFactory,
@@ -55,7 +55,7 @@ describe('API', function () {
 				silentErrors : true,
 				adapter      : {}
 			};
-			qsConverterFactory.createInstance(customOptions);
+			qsConverterFactory.createInstance('test', customOptions);
 			expect(QSConverterStub).to.have.been.calledWith(customOptions);
 		});
 
@@ -67,7 +67,7 @@ describe('API', function () {
 				silentErrors : false,
 				adapter      : {}
 			};
-			qsConverterFactory.createInstance(customOptions);
+			qsConverterFactory.createInstance('test', customOptions);
 			expect(QSConverterStub).to.have.been.calledWith(expectedOptions);
 		});
 
@@ -78,7 +78,7 @@ describe('API', function () {
 			let expectedOptions = _.defaults({
 				adapter : sequelizeAdapterMock
 			}, defaultOptions);
-			qsConverterFactory.createInstance(customOptions);
+			qsConverterFactory.createInstance('test', customOptions);
 			expect(QSConverterStub).to.have.been.calledWith(expectedOptions);
 		});
 
@@ -95,21 +95,26 @@ describe('API', function () {
 				adapter : 'nonExisting'
 			};
 			let errorMessage = 'Specified Adapter "nonExisting" could not be found. If it is a custom adapter, register it first with #registerAdapter().';
-			let createInstanceCall = qsConverterFactory.createInstance.bind(qsConverterFactory, customOptions);
-			expect(createInstanceCall).to.throw(errors.MissingAdapter, errorMessage);
+			let createInstanceCall = qsConverterFactory.createInstance.bind(qsConverterFactory, 'test', customOptions);
+			expect(createInstanceCall).to.throw(qsErrors.MissingAdapter, errorMessage);
 		});
-
-
 	});
 
-
-	describe('#errors', function () {
-		it('should populate Error "InvalidQueryParameter"', function () {
-			expect(qsConverterFactory.InvalidQueryParameter).to.exist;
+	describe('#getInstance(name)', function () {
+		it('should exist', function () {
+			expect(qsConverterFactory.getInstance).to.exist;
+			expect(qsConverterFactory.getInstance).to.be.a('function');
 		});
 
-		it('should populate Error "InvalidArgument', function () {
-			expect(qsConverterFactory.InvalidQueryValue).to.exist;
+		it('should return previously created instance', function () {
+			var myInstance = qsConverterFactory.createInstance('test');
+			expect(qsConverterFactory.getInstance('test')).to.equal(myInstance);
+		});
+
+		it('should throw "InvalidInstanceName" Error if no instance with this name exists', function () {
+			let creationInstanceCall = qsConverterFactory.getInstance.bind(qsConverterFactory, 'nonExisting');
+			let errorMessage = 'No Instance with name "nonExisting" found. Please make sure you created it with #createInstance().';
+			expect(creationInstanceCall).to.throw(qsErrors.InvalidInstanceName, errorMessage);
 		});
 	});
 });

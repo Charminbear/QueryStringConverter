@@ -17,11 +17,37 @@ var defaultOptions = {
 		adapter      : 'sequelize'
 	};
 
+var instances = new Map();
+/**
+ * @type {{createInstance: Function}}
+ */
 var QueryStringConverterFactory = {
-	createInstance : function (customOptions) {
+	/**
+	 * Creates a QueryStringConverter and stores it with the given name. If no custom options given, it will be created
+	 * with the defaults.
+	 * @param name
+	 * @param customOptions
+	 * @returns {QueryStringConverter}
+	 */
+	createInstance : function (name, customOptions) {
 		let options = _.defaults({}, customOptions, defaultOptions);
         options.adapter = resolveAdapter(options.adapter);
-		return new QueryStringConverter(options);
+
+		var createdInstance = new QueryStringConverter(options);
+		instances.set(name, createdInstance);
+		return createdInstance;
+	},
+	/**
+	 * Get a previously created instance by its name
+	 * @param name
+	 * @returns {*}
+	 */
+	getInstance : function (name) {
+		var instance = instances.get(name);
+		if(!instance){
+			throw new allErrors.InvalidInstanceName('No Instance with name "' + name + '" found. Please make sure you created it with #createInstance().');
+		}
+		return instances.get(name);
 	}
 };
 
