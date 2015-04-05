@@ -20,6 +20,7 @@ var defaultOptions = {
 var instances = new Map();
 /**
  * @type {{createInstance: Function}}
+ * @class QueryStringConverterFactory
  */
 var QueryStringConverterFactory = {
 	/**
@@ -40,7 +41,7 @@ var QueryStringConverterFactory = {
 	/**
 	 * Get a previously created instance by its name
 	 * @param name
-	 * @returns {*}
+	 * @returns {QueryStringConverter}
 	 */
 	getInstance : function (name) {
 		var instance = instances.get(name);

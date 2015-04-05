@@ -7,6 +7,10 @@ const _ = require('lodash'),
   queryString = require('querystring'),
   qsErrors = require('./errors');
 
+/**
+ * @param options
+ * @constructor QueryStringConverter
+ */
 var QueryStringConverter = function (options) {
   if (!options) {
     throw new Error('Missing Options Object');
