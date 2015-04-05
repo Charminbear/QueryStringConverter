@@ -20,8 +20,10 @@
     "chai": "^2.2.0",
     "mocha": "^2.1.0",
     "proxyquire": "^1.4.0",
+    "sequelize": "^2.0.5",
     "sinon": "^1.12.2",
-    "sinon-chai": "^2.7.0"
+    "sinon-chai": "^2.7.0",
+    "sqlite3": "^3.0.5"
   },
   "dependencies": {
     "lodash": "^3.3.1"
