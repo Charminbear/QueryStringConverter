@@ -1,5 +1,8 @@
+'use strict';
+
 const expect = require("chai").expect,
 	Sequelize = require('sequelize'),
+	querystring = require('querystring'),
 	QueryStringConverterFactory = require('../../src/index');
 
 
@@ -14,8 +17,8 @@ var data = [
 		lastName : 'Payne'
 	},
 	{
-		name     : 'Roger',
-		lastName : 'Rabbit'
+		name     : 'John',
+		lastName : 'Wayne'
 	},
 	{
 		name     : 'Bruce',
@@ -27,7 +30,7 @@ describe('System Test', function () {
 	var Person,
 		queryStringConverter;
 
-	this.timeout(10000);
+	this.timeout(2000);
 	before(function (done) {
 		Person = sequelize.define('Person', {name : Sequelize.STRING, lastName : Sequelize.STRING});
 		sequelize.sync()
@@ -77,9 +80,46 @@ describe('System Test', function () {
 	});
 
 	describe('orderBy', function () {
-		it('orderBy=name should order by name', function () {
-
+		it('orderBy=name should order by name ascending', function (done) {
+			var queryObject = queryStringConverter.convertQuery('orderBy=name');
+			sendQuery(queryObject, function (result) {
+				expect(result[0].name).to.equal('Bruce');
+				expect(result[1].name).to.equal('John');
+				expect(result[2].name).to.equal('Max');
+				done();
+			});
 		});
+
+		it('orderBy=+name should order by name ascending', function (done) {
+			let queryString = "orderBy=" + querystring.escape('+name');
+			let queryObject = queryStringConverter.convertQuery(queryString);
+			sendQuery(queryObject, function (result) {
+				expect(result[0].name).to.equal('Bruce');
+				expect(result[1].name).to.equal('John');
+				expect(result[2].name).to.equal('Max');
+				done();
+			});
+		});
+
+		it('orderBy=-name should order by name descending', function (done) {
+			var queryObject = queryStringConverter.convertQuery('orderBy=-name');
+			sendQuery(queryObject, function (result) {
+				expect(result[0].name).to.equal('Max');
+				expect(result[1].name).to.equal('John');
+				expect(result[2].name).to.equal('Bruce');
+				done();
+			});
+		});
+
+		it('orderBy=lastName,name should order by both', function (done) {
+			var queryObject = queryStringConverter.convertQuery('orderBy=-lastname,name');
+			sendQuery(queryObject, function (result) {
+				expect(result[0].name).to.equal('Bruce');
+				expect(result[1].name).to.equal('John');
+				expect(result[2].name).to.equal('Max');
+				done();
+			});
+		})
 	});
 
 
