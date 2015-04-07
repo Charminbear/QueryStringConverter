@@ -8,8 +8,9 @@ const _ = require('lodash'),
   qsErrors = require('./errors');
 
 /**
- * @param options
- * @constructor QueryStringConverter
+ * @name QueryStringConverter
+ * @param {DefaultOptions} options
+ * @constructor
  */
 var QueryStringConverter = function (options) {
   if (!options) {

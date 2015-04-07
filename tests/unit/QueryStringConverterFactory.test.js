@@ -14,7 +14,7 @@ chai.use(sinonChai);
 
 const qsErrors = require('../../src/errors');
 
-describe('API', function () {
+describe('QueryStringConverterFactory', function () {
 	var qsConverterFactory,
 		QSConverterStub;
 
@@ -28,7 +28,7 @@ describe('API', function () {
 	};
 	beforeEach(function () {
 		QSConverterStub = sinon.stub();
-		qsConverterFactory = proxyquire('../../src/', {
+		qsConverterFactory = proxyquire('../../src/QueryStringConverterFactory.js', {
 			'./QueryStringConverter' : QSConverterStub,
 			'./sequelizeAdapter'     : sequelizeAdapterMock
 		});
