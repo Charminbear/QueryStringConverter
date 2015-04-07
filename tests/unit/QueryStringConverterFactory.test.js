@@ -30,7 +30,7 @@ describe('QueryStringConverterFactory', function () {
 		QSConverterStub = sinon.stub();
 		qsConverterFactory = proxyquire('../../src/QueryStringConverterFactory.js', {
 			'./QueryStringConverter' : QSConverterStub,
-			'./sequelizeAdapter'     : sequelizeAdapterMock
+			'./adapters/sequelizeAdapter'     : sequelizeAdapterMock
 		});
 	});
 

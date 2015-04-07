@@ -52,7 +52,7 @@ function resolveAdapter(adapter) {
 		return adapter;
 	} else {
 		try {
-			return require('./' + adapter + 'Adapter');
+			return require('./adapters/' + adapter + 'Adapter');
 		} catch (e) {
 			throw new allErrors.MissingAdapter('Specified Adapter "' + adapter + '" could not be found. If it is a custom adapter, register it first with #registerAdapter().');
 		}

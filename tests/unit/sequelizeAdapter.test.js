@@ -3,7 +3,7 @@
 const chai = require("chai"),
 	expect = chai.expect;
 
-const sequelizeAdapter = require('../../src/sequelizeAdapter');
+const sequelizeAdapter = require('../../src/adapters/sequelizeAdapter');
 
 describe('SequelizeAdapter', function () {
 	it('should exist', function () {
