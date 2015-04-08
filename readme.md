@@ -19,27 +19,32 @@ var Person = sequelize.define('Person', {name : Sequelize.STRING, lastName : Seq
 ##API 
 
 **Factory**
+
 When you require('QueryStringConverter') inside your app, you will actually get a Factory for QueryStringConverters. Use it as follows:
 
 * createInstance({String} name, [{Object} options]) - create a new QueryStringConverter with a string-based name. Possible Options are:
     * silentErrors {boolean} - if set to true, no errors will be thrown, invalid keys or values are ignored
     * adapter {String} - specify the adapter to be used by this instance (defaults to 'sequelize')
-    * ~customAdapterElements {Map} - Map of custom adapter-elements to be used~
+    * ~~customAdapterElements {Map} - Map of custom adapter-elements to be used~~
 * getInstance(name) - receive a previously created adapter by the given name.
 * ~~registerAdapter(name, adapter) - Add a new adapter which can then be used within the adapter-option passed to
 createInstance identified by the name~~
 * ~~setDefaultOptions(options) - takes in the same Options as the *createInstance* Methods. All further calls to
 **createInstance** will use those options to create an instance.~~
 
+
 **QueryStringConvert**
+
 * convertAll(queryString) - takes in a non-encoded QueryString and converts all QueryParameters with the specified
 Adapter. Returns an {Object} that you can use directly for querying the Database.
 
 
 **Adapter**
+
 An adapter is nothing more than a Map, its keys equal the QueryParameterKeys, its values are AdapterElements.
 
 **AdapterElement**
+
 The Adapter-Element needs 3 properties:
 
 * key {String} - This is the key used within the result-object of the converter
@@ -53,11 +58,13 @@ will be used and checked for a true or falsy value.
 
 
 ##Predefined Adapters
-**sequelize**
-* limitTo - valid inputs: Numbers =>Outputs: `{limit: INTEGER}`
-* offset - valid inputs: Numbers => Outputs: `{offset: INTEGER}`
-* orderBy - valid inputs: Comma separated list of fields to order by. The sort order is read from the prefix: +_field_ & _field_ for Ascending, -_field_ for descending sort order => Outputs: `[['field1', 'ASC'], ['field2', 'DESC']]`
-* fields - Comma-separated fields to include in the Answer-Object. => Outputs: `{attributes : ['column1', 'column2']}`
+**sequelize** (default)
+
+|Query-Key|Valid Inputs|Description|Example-Input|Example-Output|
+|limitTo|Numbers|?limitTo=9|`{limit: 9}`|
+|offset|Numbers|?offset=2|`{offset: 2}`|
+|orderBy|Strings, Comma-Separated|?+foo,bar,-hello|`[['foo', 'ASC'], ['bar', 'ASC'],['hello', 'DESC']]`|
+|fields|Strings, Comma-Separated|?fields=column1,coumn2|`{attributes : ['column1', 'column2']}`|
 
 
 ##License
