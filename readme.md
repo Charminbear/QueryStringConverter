@@ -1,3 +1,5 @@
+## Work in Progress
+
 #QueryStringConverter
 
 Helping you to easily convert Querystrings from a **REST**ful URI into whatever format you need, for example a valid
@@ -5,24 +7,37 @@ query-object for the awesome **sequelize** library! The idea is to have a very s
 between your requests and your Controllers and/or DB-Calls. Yay - Separation of Concerns!
 
 ##EXAMPLE
-tbd
+```JavaScript
+const sequelize = require('sequelize'),
+      QueryStringConverter = require('QueryStringConverter');
+// Connect to DB and call sync()
+// ...
+var sequelizeConverter = QueryStringConverter.createInstance();
+var Person = sequelize.define('Person', {name : Sequelize.STRING, lastName : Sequelize.STRING});
+```
 
-##API
-**QueryStringConverterFactory**
-The QueryStringConverterFactory is what you get when you require('QueryStringConverter') inside your app. It has the following methods:
+##API 
 
-* createInstance({String} name, [{Object} options]) - create a new QueryStringConverter with a string-based nam. Possible Options are:
+**Factory**
+When you require('QueryStringConverter') inside your app, you will actually get a Factory for QueryStringConverters. Use it as follows:
+
+* createInstance({String} name, [{Object} options]) - create a new QueryStringConverter with a string-based name. Possible Options are:
     * silentErrors {boolean} - if set to true, no errors will be thrown, invalid keys or values are ignored
     * adapter {String} - specify the adapter to be used by this instance (defaults to 'sequelize')
     * ~customAdapterElements {Map} - Map of custom adapter-elements to be used~
 * getInstance(name) - receive a previously created adapter by the given name.
-* ~registerAdapter(name, adapter) - Add a new adapter which can then be used within the adapter-option passed to
-createInstance identified by the name~ *NOT YET IMPLEMENTED*
-* ~setDefaultOptions(options) - takes in the same Options as the *createInstance* Methods. All further calls to
-**createInstance** will use those options to create an instance.~
+* ~~registerAdapter(name, adapter) - Add a new adapter which can then be used within the adapter-option passed to
+createInstance identified by the name~~
+* ~~setDefaultOptions(options) - takes in the same Options as the *createInstance* Methods. All further calls to
+**createInstance** will use those options to create an instance.~~
+
+**QueryStringConvert**
+* convertAll(queryString) - takes in a non-encoded QueryString and converts all QueryParameters with the specified
+Adapter. Returns an {Object} that you can use directly for querying the Database.
+
 
 **Adapter**
-An adapter is basically a key-value store where the key is a QueryParameterKey, the value is an AdapterElement.
+An adapter is nothing more than a Map, its keys equal the QueryParameterKeys, its values are AdapterElements.
 
 **AdapterElement**
 The Adapter-Element needs 3 properties:
@@ -35,28 +50,15 @@ new value which will be added to the overall result Object with the AdatperEleme
 convertQueryValue-Function. If Regex, it will be used with *queryValue.match(regex)*. If Function, the return value
 will be used and checked for a true or falsy value.
 
-**QueryStringConvert**
 
-* convertAll(queryString) - takes in a non-encoded QueryString and converts all QueryParameters with the specified
-Adapter. Returns an {Object} with the AdapterElement's keys as properties and the results of the AdapterElement's
-*convertQueryValue* results as values.
 
-##Standard Query-API
+##Predefined Adapters
+**sequelize**
+* limitTo - valid inputs: Numbers =>Outputs: `{limit: INTEGER}`
+* offset - valid inputs: Numbers => Outputs: `{offset: INTEGER}`
+* orderBy - valid inputs: Comma separated list of fields to order by. The sort order is read from the prefix: +_field_ & _field_ for Ascending, -_field_ for descending sort order => Outputs: `[['field1', 'ASC'], ['field2', 'DESC']]`
+* fields - Comma-separated fields to include in the Answer-Object. => Outputs: `{attributes : ['column1', 'column2']}`
 
-* limitTo - valid inputs: Numbers
-* offset - valid inputs: Numbers
-* orderBy - valid inputs: +field & field for Ascending, -field for Descending sortOrder of the Field. Comma-separated
- for multiple sort fields in the order given.
-* fields - Comma-separated fields to include in the Answer-Object.
-
-##Adapters:
-**Sequelize**
-The standard Query-API transforms to these sequelize values:
-
-* limitTo --> {limit : INTEGER}
-* offset --> {offset: INTEGER}
-* orderBy --> [['field1', 'ASC'], ['field2', 'DESC']]
-* columns --> {attributes : ['column1', 'column2']}
 
 ##License
 Copyright (c) \<2014\> \<David Losert\>
