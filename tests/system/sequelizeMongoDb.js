@@ -3,7 +3,7 @@
 const expect = require("chai").expect,
 	Sequelize = require('sequelize'),
 	querystring = require('querystring'),
-	QueryStringConverterFactory = require('../../src/index');
+	QueryStringConverterFactory = require('../../index');
 
 
 var sequelize = new Sequelize('database', 'username', 'password', {

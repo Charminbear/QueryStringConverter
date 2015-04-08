@@ -5,7 +5,7 @@
 const expect = require('chai').expect,
   queryString = require('querystring');
 
-const qsConvertFactory = require('../../src/index'),
+const qsConvertFactory = require('../../index'),
   errors = require('../../src/errors');
 
 describe('Integration', function () {
