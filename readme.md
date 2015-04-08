@@ -60,11 +60,10 @@ will be used and checked for a true or falsy value.
 ##Predefined Adapters
 **sequelize** (default)
 
-|Query-Key|Valid Inputs|Description|Example-Input|Example-Output|
-|limitTo|Numbers|?limitTo=9|`{limit: 9}`|
-|offset|Numbers|?offset=2|`{offset: 2}`|
-|orderBy|Strings, Comma-Separated|?+foo,bar,-hello|`[['foo', 'ASC'], ['bar', 'ASC'],['hello', 'DESC']]`|
-|fields|Strings, Comma-Separated|?fields=column1,coumn2|`{attributes : ['column1', 'column2']}`|
+* limitTo - valid inputs: Numbers =>Outputs: `{limit: INTEGER}`
+* offset - valid inputs: Numbers => Outputs: `{offset: INTEGER}`
+* orderBy - valid inputs: Comma separated list of fields to order by. The sort order is read from the prefix: +_field_ & _field_ for Ascending, -_field_ for descending sort order => Outputs: `[['field1', 'ASC'], ['field2', 'DESC']]`
+* fields - Comma-separated fields to include in the Answer-Object. => Outputs: `{attributes : ['column1', 'column2']}`
 
 
 ##License
